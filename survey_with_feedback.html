@@ -326,7 +326,7 @@
     <div class="container" id="surveyContainer">
         <div class="intro-page">
             <div class="intro-header">
-                <img src="https://i.imgur.com/Qy546Lt.png" alt="Logo">
+                <img src="assets/logo.png" alt="Logo">
                 <h1>Welcome to the Business Innovation Readiness Assessment.</h1>
             </div>
             
@@ -541,7 +541,7 @@
             var prevCategory = surveyData.currentQuestion > 0 ? surveyData.questions[surveyData.currentQuestion - 1].category : null;
             var showCategoryHeader = question.category && question.category !== prevCategory;
             
-            var html = '<div class="logo-bar"><img src="https://i.imgur.com/Qy546Lt.png" alt="Colabora"></div>';
+            var html = '<div class="logo-bar"><img src="assets/logo.png" alt="Colabora"></div>';
             html += '<div class="progress-bar"><div class="progress-fill" style="width: ' + ((surveyData.currentQuestion / surveyData.questions.length) * 100) + '%"></div></div>';
             html += '<div class="question-container">';
             html += '<div class="question-number">Question ' + (surveyData.currentQuestion + 1) + ' of ' + surveyData.questions.length + '</div>';
@@ -557,7 +557,7 @@
             }
             
             if (question.showImage) {
-                html += '<img src="https://i.imgur.com/gE95jO1.png" class="question-image" alt="Innovation Pathways">';
+                html += '<img src="assets/innovation_pathways.png" class="question-image" alt="Innovation Pathways">';
             }
             
             if (question.type === "text") {
@@ -693,3 +693,4 @@
     </script>
 </body>
 </html>
+
