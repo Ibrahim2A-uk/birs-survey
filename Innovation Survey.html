@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Innovation Readiness Assessment (BIRS)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 107, 125, 0.15);
+        }
+        
+        .logo-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .logo-bar img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .intro-page {
+            text-align: center;
+        }
+        
+        .intro-header {
+            background: #006B7D;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .intro-header img {
+            height: 60px;
+        }
+        
+        .intro-header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+        
+        .intro-content {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .intro-content p {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #006B7D;
+            margin-bottom: 30px;
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #006B7D 0%, #00a8cc 100%);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+        }
+        
+        .category-header {
+            background: #006B7D;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .question-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #006B7D;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .question-number {
+            color: #6c757d;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .question-code {
+            color: #6c757d;
+            font-size: 12px;
+            text-align: right;
+            margin-top: 10px;
+        }
+        
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        input[type="text"] {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            width: 100%;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #006B7D;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 107, 125, 0.1);
+        }
+        
+        .radio-group, .rating-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .radio-option, .rating-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .radio-option:hover, .rating-option:hover {
+            border-color: #006B7D;
+            background: #f0f9fa;
+            transform: translateX(5px);
+        }
+        
+        .radio-option.selected, .rating-option.selected {
+            background: #006B7D;
+            border-color: #006B7D;
+            color: white;
+        }
+        
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+        
+        .rating-group {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .rating-option {
+            flex: 1;
+            min-width: 100px;
+            justify-content: center;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .navigation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .feedback-input {
+            flex: 1;
+            max-width: 520px;
+            height: 42px;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .feedback-input:focus {
+            outline: none;
+            border-color: #0b7285;
+            box-shadow: 0 0 0 3px rgba(11, 114, 133, 0.15);
+        }
+        
+        .btn {
+            background: #006B7D;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover:not(:disabled) {
+            background: #005566;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 107, 125, 0.3);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #5a6268;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .completion-message {
+            text-align: center;
+            padding: 60px 40px;
+        }
+        
+        .completion-message h2 {
+            color: #006B7D;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #006B7D;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .question-title {
+                font-size: 20px;
+            }
+            
+            .rating-group {
+                flex-direction: column;
+            }
+            
+            .rating-option {
+                min-width: 100%;
+            }
+            
+            .intro-header {
+                flex-direction: column;
+            }
+            
+            .intro-content p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="surveyContainer">
+        <div class="intro-page">
+            <div class="intro-header">
+                <img src="assets/logo.png" alt="Logo">
+                <h1>Welcome to the Business Innovation Readiness Assessment.</h1>
+            </div>
+            
+            <div class="intro-content">
+                <p><strong>This assessment is designed to capture an objective view of your organisation's innovation readiness. It consists of a series of short questions and will take approximately 15 minutes to complete.</strong></p>
+                
+                <p><strong>There are no right or wrong answers—please respond honestly based on your experience to help build an accurate picture of the organisation's innovation readiness.</strong></p>
+            </div>
+            
+            <button class="btn" onclick="startSurvey()" style="font-size: 18px; padding: 16px 40px;">Begin Assessment</button>
+        </div>
+    </div>
+
+    <script>
+        console.log("Script loaded");
+        
+        // Survey data
+        const surveyData = {
+            currentQuestion: -1,
+            answers: {},
+            feedback: {},
+            questions: [
+                {
+                    id: "q1_role",
+                    type: "text",
+                    title: "Your Role",
+                    required: true,
+                    code: "iQ1-C1"
+                },
+                {
+                    id: "q2_business_type",
+                    type: "radio",
+                    title: "Which of the following best describes organisation’s core business model?",
+                    required: true,
+                    code: "iQ2-C2",
+                    options: [
+                        "Asset Owner / Client Organisation",
+                        "Consultancy Services",
+                        "Contracting Services (hrs + products)",
+                        "Developer / Investor",
+                        "Supplier / Manufacturer",
+                        "Software Vendor",
+                        "Hybrid"
+                    ]
+                },
+                {
+                    id: "q3_strategy",
+                    type: "radio",
+                    title: "Which of the following best describes the CURRENT performance of your organisation?",
+                    required: true,
+                    code: "iQ3-C3",
+                    options: [
+                        "Vulnerable → Defensive posture against external threats",
+                        "Protect the Core → Maintaining position through incremental change",
+                        "Elevate the Game → Competitive differentiation within current models",
+                        "Model Transition → Transforming business models for new revenues",
+                        "New Business → Creating entirely new market value"
+                    ]
+                },
+                {
+                    id: "q4_classification",
+                    type: "radio",
+                    title: "Which of the following best describes the CURRENT innovation pathway of your organisation?",
+                    description: "Disruptive times reward innovators and punishes inertia",
+                    required: true,
+                    showImage: true,
+                    options: [
+                        "NorthStar",
+                        "Challenger",
+                        "Foundationalist",
+                        "Inertia-Alliance"
+                    ]
+                },
+                {
+                    id: "q5_innovation_history",
+                    type: "radio",
+                    title: "Which of the following best describes your organisation’s innovation history?",
+                    required: true,
+                    code: "iQ5-C5",
+                    options: [
+                        "No structured innovation activity to date",
+                        "Isolated pilots or experiments",
+                        "Multiple initiatives with mixed outcomes",
+                        "Repeatable innovation success stories",
+                        "Established track record of scaled innovation"
+                    ]
+                },
+                {
+                    id: "q6_desired_strategy",
+                    type: "radio",
+                    title: "Which of the following best describes the DESIRED business objective for your organisation?",
+                    required: true,
+                    code: "iQ6-C6",
+                    options: [
+                        "Vulnerable → Defensive posture against external threats",
+                        "Protect the Core → Maintaining position through incremental change",
+                        "Elevate the Game → Competitive differentiation within current models",
+                        "Model Transition → Transforming business models for new revenues",
+                        "New Business → Creating entirely new market value"
+                    ]
+                },
+                {
+                    id: "q7_aspiration",
+                    type: "radio",
+                    title: "Which innovation pathway does your organisation ASPIRE to?",
+                    required: true,
+                    code: "iQ7-C7",
+                    showImage: true,
+                    options: [
+                        "NorthStar",
+                        "Challenger",
+                        "Foundationalist",
+                        "Inertia-Alliance"
+                    ]
+                }
+            ]
+        };
+
+        // Likert scale questions (8-52) - sourced from Updated Questions.xlsx
+        const likertQuestions = [
+  { n: 8, code: "iQ8-FG1-P1-1", title: "My organisation maintains a dedicated innovation investment plan that ensures a clear alignment of budgets with long-term business goals?" },
+  { n: 9, code: "iQ9-FG2-P1-2", title: "Our innovation budget is ring-fenced from financial fluctuations and new leadership appointments?" },
+  { n: 10, code: "iQ10-FG3-P2-1", title: "We release funds and resources to innovation projects in phases based on the achievement of specific performance and/or learning milestones?" },
+  { n: 11, code: "iQ11-FG4-P2-2", title: "We reallocate funds and resources away from low-performing innovation projects to fund higher-potential ones?" },
+  { n: 12, code: "iQ12-FG5-P3-1", title: "My organisation has clear operating rules with defined boundaries that still enable creativity and experimentation?" },
+  { n: 13, code: "iQ13-FG6-P3-2", title: "Our innovation projects have clearly defined sponsors and approvers that drive decision-making and add valuable inputs rather than creating bureaucratic bottlenecks?" },
+  { n: 14, code: "iQ14-FG7-P4-1", title: "Our innovation projects have clear success goals measured by quantitative and qualitative KPI metrics like ROI, time-to-market, and speed-of-learning?" },
+  { n: 15, code: "iQ15-FG8-P4-2", title: "My organisation recognises and rewards lessons from failures as necessary steps in the pursuit of success?" },
+  { n: 16, code: "iQ16-FG9-P5-1", title: "We monitor and manage the risks (legal, technical, regulatory, ethical, data-privacy) on a regular basis and throughout the lifecycle of innovation projects?" },
+  { n: 17, code: "iQ17-FG10-P5-2", title: "Our risk and compliance teams act as partners who help us find a way to 'YES' rather than answering 'NO' when reviewing innovation projects?" },
+  { n: 18, code: "iQ18-FG11-P6-1", title: "Our executive sponsors are personally invested in the success of innovation initiatives by actively championing projects rather than just receiving status reports?" },
+  { n: 19, code: "iQ19-FG12-P6-2", title: "Our organisation encourages its leaders to prioritise innovation as much as they do on day-to-day operations?" },
+  { n: 20, code: "iQ20-IP1-P1-1", title: "We periodically analyse market trends, competitors, and anticipate client needs to generate problem statements that strategically guide innovation initiatives?" },
+  { n: 21, code: "iQ21-IP2-P1-2", title: "Over the last 12 months, customers and markets have recognised us as innovative through formal feedback, client testimonials, awards etc…" },
+  { n: 22, code: "iQ22-IP3-P2-1", title: "Every innovation initiative we fund is explicitly anchored to one or more of our strategic goals?" },
+  { n: 23, code: "iQ23-IP4-P3-1", title: "My business clearly articulates its innovation strategies to inspire teams and promote collaboration on shared initiatives?" },
+  { n: 24, code: "iQ24-IP5-P3-2", title: "Over the last 12 months we have successfully launched 2 or more innovation initiatives aligned with strategic directions (grow, differentiate, productivity, etc…)?" },
+  { n: 25, code: "iQ25-IP6-P4-1", title: "We source and filter ideas from all levels of the organization using a streamlined intake process avoiding lengthy business cases in favour of rapid exploration?" },
+  { n: 26, code: "iQ26-IP7-P4-2", title: "Over the last 12 months, we have assessed multiple innovation ideas and made explicit decisions to progress, refine, or discontinue them based on predefined objective criteria versus just executive preference?" },
+  { n: 27, code: "iQ27-IP8-P5-1", title: "We have a high \"kill-rate\" for innovative ideas in the experimental phase facilitated by an early testing culture that promotes rapid \"failure vs success\" assessments?" },
+  { n: 28, code: "iQ28-IP9-P5-2", title: "I have access to internal or external resources that, along with existing delivery methods, support the implementation of innovation initiatives?" },
+  { n: 29, code: "iQ29-IP10-P6-1", title: "We systematically document the outcome of every project to ensure we scale our successes and never repeat the same mistakes?" },
+  { n: 30, code: "iQ30-IP11-P6-2", title: "My business has a strong track-record of commercialising and realising value from our innovation initiatives?" },
+  { n: 31, code: "iQ31-CA1-P1-1", title: "Our senior leaders demonstrate a genuine curiosity about new ideas and are comfortable with the uncertainty of the innovation process?" },
+  { n: 32, code: "iQ32-CA2-P1-2", title: "If a strategically important  yet disruptive idea threatens our core business model, we will find the way to fund it rather than suppress it, even if it means sacrificing short term profits?" },
+  { n: 33, code: "iQ33-CA3-P1-3", title: "Our leadership, management, and teams take ownership for unsuccessful innovation initiatives, which reinforces a culture of curiosity and experimentation?" },
+  { n: 34, code: "iQ34-CA4-P2-1", title: "Our employees feel empowered to explore and experiment with new ideas without fear of being penalised?" },
+  { n: 35, code: "iQ35-CA5-P2-2", title: "I can name at least one successful innovation over the last 12 months that started as an experiment and scaled into a viable business solution?" },
+  { n: 36, code: "iQ36-CA6-P3-1", title: "My organisation incentivises and recognises people for being curious, creative, and collaborative, not just for maintaining the status quo?" },
+  { n: 37, code: "iQ37-CA7-P3-2", title: "Our internal communications celebrate the \"unsung heroes\" of innovation, not just the final, polished products and services?" },
+  { n: 38, code: "iQ38-CA8-P4-1", title: "We communicate our innovation progress—including the struggles and pivots—openly and transparently across the entire enterprise?" },
+  { n: 39, code: "iQ39-CA9-P4-2", title: "I have visibility of the innovation projects being developed across my organisation?" },
+  { n: 40, code: "iQ40-CA10-P5-1", title: "We encourage our most talented people to participate in innovation projects, even when it creates a temporary gap in their own team?" },
+  { n: 41, code: "iQ41-CA11-P5-2", title: "We actively invest to upskill employees to support the execution of innovation projects?" },
+  { n: 42, code: "iQ42-CA12-P6-1", title: "We have a strong track record of innovation that will become the foundaiton of our future successes?" },
+  { n: 43, code: "iQ43-DAI1-P1-1", title: "Our data management is robust and we continuously integrate new data sources to enable the use of advanced analytics and AI at scale?" },
+  { n: 44, code: "iQ44-DAI2-P1-2", title: "My organisation trusts the data enough to make a high-stakes decisions?" },
+  { n: 45, code: "iQ45-DAI3-P2-1", title: "Every critical data set in our organization has a clear \"owner\" who is accountable for its quality, security, and accessibility?" },
+  { n: 46, code: "iQ46-DAI4-P2-2", title: "We have stopped at least one initiative in the last year because we realized the underlying data quality was not strong enough?" },
+  { n: 47, code: "iQ47-DAI5-P3-1", title: "In support of our innovation initiatives, my organisation has made technologies and skilled resources available to develop and scale AI models?" },
+  { n: 48, code: "iQ48-DAI6-P3-2", title: "We are actively and effectively using AI to solve important business challenges rather than just running small, low-impact experiments in the background?" },
+  { n: 49, code: "iQ49-DAI7-P4-1", title: "We actively invest to upskill employees to work with data and AI, beyond a small group of specialists, and understand their limitations?" },
+  { n: 50, code: "iQ50-DAI8-P4-2", title: "We encourage cross-functional collaboration (e?g?, data scientists working with business teams) so people can effectively apply data and AI in practice?" },
+  { n: 51, code: "iQ51-DAI9-P5-1", title: "We have a rigorous ethical, privacy and fairness framework that ensures our AI systems are transparent, unbiased, and compliant with privacy standards?" },
+  { n: 52, code: "iQ52-DAI10-P6-1", title: "Over the last 12 months, we have intentionally shut down one or more AI related projects that no longer delivered the specific value we initially projected?" }
+];
+
+        // Add Likert questions to survey
+        likertQuestions.forEach(function(q) {
+            var category = getCategoryFromCode(q.code);
+
+            surveyData.questions.push({
+                id: "q" + q.n,
+                type: "likert",
+                title: q.title,
+                required: true,
+                category: category,
+                code: q.code,
+                options: [
+                    "Strongly Disagree",
+                    "Disagree",
+                    "Slightly Agree",
+                    "Agree",
+                    "Strongly Agree"
+                ]
+            });
+        });
+
+        function getCategoryFromCode(code) {
+            if (!code) return null;
+            if (code.includes("-FG")) return "Funding & Governance";
+            if (code.includes("-IP")) return "Innovation Playbook";
+            if (code.includes("-CA")) return "Culture & Alignment";
+            if (code.includes("-DAI")) return "Data & AI Capabilities";
+            return null;
+        }
+
+        function startSurvey() {
+            console.log("Starting survey");
+            surveyData.currentQuestion = 0;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            var question = surveyData.questions[surveyData.currentQuestion];
+            var container = document.getElementById("surveyContainer");
+            var currentAnswer = surveyData.answers[question.id];
+            var currentFeedback = surveyData.feedback[question.id] || "";
+            var prevCategory = surveyData.currentQuestion > 0 ? surveyData.questions[surveyData.currentQuestion - 1].category : null;
+            var showCategoryHeader = question.category && question.category !== prevCategory;
+            
+            var html = '<div class="logo-bar"><img src="assets/logo.png" alt="Colabora"></div>';
+            html += '<div class="progress-bar"><div class="progress-fill" style="width: ' + ((surveyData.currentQuestion / surveyData.questions.length) * 100) + '%"></div></div>';
+            html += '<div class="question-container">';
+            html += '<div class="question-number">Question ' + (surveyData.currentQuestion + 1) + '</div>';
+            
+            if (showCategoryHeader) {
+                html += '<div class="category-header">' + question.category + '</div>';
+            }
+            
+            html += '<h2 class="question-title">' + question.title + '</h2>';
+            
+            if (question.description) {
+                html += '<p style="color: #6c757d; margin-bottom: 20px;">' + question.description + '</p>';
+            }
+            
+            if (question.showImage) {
+                html += '<img src="assets/innovation_pathways.png" class="question-image" alt="Innovation Pathways">';
+            }
+            
+            if (question.type === "text") {
+                html += '<input type="text" id="answer" value="' + (currentAnswer || '') + '" placeholder="Enter your answer...">';
+                if (question.id === "q1_role") {
+                    var companyVal = surveyData.answers["q1_company_name"] || "";
+                    html += '<input type="text" id="companyName" value="' + companyVal.replace(/"/g, "&quot;") + '" placeholder="Company" style="margin-top: 12px;">';
+                }
+            } else if (question.type === "radio") {
+                html += '<div class="radio-group">';
+                question.options.forEach(function(option) {
+                    var selected = currentAnswer === option ? 'selected' : '';
+                    html += '<label class="radio-option ' + selected + '" onclick="selectOption(\'' + option.replace(/'/g, "\\'") + '\')">';
+                    html += '<input type="radio" name="answer" value="' + option + '" ' + (selected ? 'checked' : '') + '>';
+                    html += '<span>' + option + '</span></label>';
+                });
+                html += '</div>';
+            } else if (question.type === "likert") {
+                html += '<div class="rating-group">';
+                question.options.forEach(function(option, index) {
+                    var selected = currentAnswer === (index + 1) ? 'selected' : '';
+                    html += '<div class="rating-option ' + selected + '" onclick="selectRating(' + (index + 1) + ')">' + option + '</div>';
+                });
+                html += '</div>';
+            }
+            
+            html += '<div class="error-message hidden" id="errorMsg">This question is required</div></div>';
+            html += '<div class="navigation">';
+            html += '<button class="btn btn-secondary" onclick="previousQuestion()" ' + (surveyData.currentQuestion === 0 ? 'disabled' : '') + '>Previous</button>';
+            var feedbackPlaceholder = (question.id === "q2_business_type") ? "Other" : "Comments";
+            html += '<input id=\"feedbackInput\" class=\"feedback-input\" type=\"text\" placeholder="'+ feedbackPlaceholder +'\" oninput=\"updateFeedback(this.value)\" />';
+            html += '<button class="btn" onclick="nextQuestion()">' + (surveyData.currentQuestion === surveyData.questions.length - 1 ? 'Submit' : 'Next') + '</button>';
+            html += '</div>';
+            html += '<div class="question-code">' + (question.code || '') + '</div>';
+            
+            container.innerHTML = html;
+            var fi = document.getElementById("feedbackInput");
+            if (fi) { fi.value = currentFeedback; }
+        }
+
+        function updateFeedback(value) {
+            var question = surveyData.questions[surveyData.currentQuestion];
+            surveyData.feedback[question.id] = value || "";
+        }
+
+        function selectOption(value) {
+            var question = surveyData.questions[surveyData.currentQuestion];
+            surveyData.answers[question.id] = value;
+            renderQuestion();
+        }
+
+        function selectRating(value) {
+            var question = surveyData.questions[surveyData.currentQuestion];
+            surveyData.answers[question.id] = value;
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            var question = surveyData.questions[surveyData.currentQuestion];
+            var answer;
+            
+            if (question.type === "text") {
+                answer = document.getElementById("answer").value.trim();
+            } else {
+                answer = surveyData.answers[question.id];
+            }
+            
+            if (question.required && !answer) {
+                document.getElementById("errorMsg").classList.remove("hidden");
+                return;
+            }
+            
+            // Capture optional company name for Q1
+            if (question.id === "q1_role") {
+                var cnEl = document.getElementById("companyName");
+                if (cnEl) {
+                    surveyData.answers["q1_company_name"] = (cnEl.value || "").trim();
+                }
+            }
+
+            surveyData.answers[question.id] = answer;
+            
+            if (surveyData.currentQuestion === surveyData.questions.length - 1) {
+                submitSurvey();
+            } else {
+                surveyData.currentQuestion++;
+                renderQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (surveyData.currentQuestion > 0) {
+                surveyData.currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function buildSubmissionPayload() {
+            // Keep backwards compatibility with your existing Apps Script:
+            // - answers remain as-is (q1_role, q2_dept, ...)
+            // - feedback is added as additional keys with suffix "_feedback"
+            var payload = {};
+            Object.keys(surveyData.answers || {}).forEach(function(k) {
+                payload[k] = surveyData.answers[k];
+            });
+            Object.keys(surveyData.feedback || {}).forEach(function(k) {
+                payload[k + "_feedback"] = surveyData.feedback[k];
+            });
+            // Optional metadata (uncomment if you want these in the Sheet)
+            // payload["_submittedAt"] = new Date().toISOString();
+            return payload;
+        }
+
+        function submitSurvey() {
+            var scriptURL = 'https://script.google.com/macros/s/AKfycbxkYqgZtP3YpqPSX7rPzEW14Cek20any_GLNQrQ_J1C9c-udFtfsjot2P7teuZC3eAtFA/exec';
+            
+            document.getElementById("surveyContainer").innerHTML = '<div class="completion-message"><h2>Saving your responses...</h2><div class="spinner"></div><p>Please wait while we submit your data.</p></div>';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(buildSubmissionPayload())
+            })
+            .then(function() {
+                document.getElementById("surveyContainer").innerHTML = '<div class="completion-message"><h2>Thank you for completing the assessment!</h2><p>Your responses have been successfully saved.</p><p style="margin-top: 20px; color: #006B7D; font-weight: 600; font-size: 20px;">We will be in touch with your Business Innovation Readiness Score soon.</p></div>';
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                var dataStr = JSON.stringify(surveyData.answers, null, 2);
+                document.getElementById("surveyContainer").innerHTML = '<div class="completion-message"><h2>Submission Issue</h2><p>There was a problem saving your responses online.</p><button class="btn" onclick="downloadResults()">Download Your Responses</button><pre style="background: #f8f9fa; padding: 20px; margin-top: 20px; text-align: left; border-radius: 8px; max-height: 400px; overflow: auto;">' + dataStr + '</pre></div>';
+            });
+        }
+
+        function downloadResults() {
+            var dataStr = JSON.stringify(surveyData.answers, null, 2);
+            var dataBlob = new Blob([dataStr], {type: 'application/json'});
+            var url = URL.createObjectURL(dataBlob);
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = 'BIRS_Survey_' + new Date().toISOString().slice(0,10) + '.json';
+            link.click();
+        }
+        
+        console.log("Survey initialized with " + surveyData.questions.length + " questions");
+    </script>
+</body>
+</html>
+
